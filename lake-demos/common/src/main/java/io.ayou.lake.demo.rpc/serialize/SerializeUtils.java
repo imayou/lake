@@ -18,6 +18,7 @@ public class SerializeUtils {
     }
 
     public static <T> T deserialize(byte[] bytes, Class<T> aClass) {
+        System.out.println(new String(bytes));
         Schema<T> schema = RuntimeSchema.getSchema(aClass);
         T object = schema.newMessage();
         ProtostuffIOUtil.mergeFrom(bytes, object, schema);

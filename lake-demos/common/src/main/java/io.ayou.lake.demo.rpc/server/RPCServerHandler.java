@@ -10,6 +10,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
@@ -17,7 +18,7 @@ import java.util.concurrent.Executors;
  */
 @Sharable
 public class RPCServerHandler extends SimpleChannelInboundHandler<RpcCall> {
-    private final Executor executor = Executors.newFixedThreadPool(20);
+    private final ExecutorService executor = Executors.newFixedThreadPool(20);
     private final FiberScheduler scheduler = new FiberExecutorScheduler("rpcHandler", executor);
     @Autowired
     private ServiceProvider serviceProvider;

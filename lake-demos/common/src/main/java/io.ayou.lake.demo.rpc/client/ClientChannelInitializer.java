@@ -19,10 +19,11 @@ public class ClientChannelInitializer extends ChannelInitializer<SocketChannel> 
 
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
-        ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(65535, 0, 4, 0, 4)).addLast(new RPCDecoder() {
-        })
-                .addLast(new LengthFieldPrepender(4, false)).addLast(new RPCEncoder() {
-        }).addLast(rpcClientHandler);
+        ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(65535, 0, 4, 0, 4))
+                .addLast(new LengthFieldPrepender(4, false))
+                .addLast(new RPCDecoder(){})
+                .addLast(new RPCEncoder() {})
+                .addLast(rpcClientHandler);
     }
 }
 

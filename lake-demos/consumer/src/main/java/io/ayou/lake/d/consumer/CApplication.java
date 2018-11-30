@@ -7,11 +7,13 @@ import io.ayou.lake.demo.rpc.autoconfiguration.EnableServiceDiscovery;
 import io.ayou.lake.demo.rpc.client.ServiceProxyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
@@ -28,7 +30,17 @@ public class CApplication {
         SpringApplication.run(CApplication.class, args);
     }
 
-    @Bean
+    @Autowired
+    ServiceProxyUtil serviceProxyUtil;
+
+    @PostConstruct
+    public void test(){
+        UserService userService = serviceProxyUtil.serviceProxy("test", UserService.class);
+        User u = userService.get("1");
+        System.out.println(u);
+    }
+
+    /*@Bean
     public CommandLineRunner runner(ServiceProxyUtil serviceProxyUtil) {
         return (String... args) -> {
             UserService userService = serviceProxyUtil.serviceProxy("test", UserService.class);
@@ -56,5 +68,5 @@ public class CApplication {
                 System.out.println(" ");
             }
         };
-    }
+    }*/
 }

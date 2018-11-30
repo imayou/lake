@@ -1,26 +1,38 @@
 package io.ayou.lake.demo.rpc.registry;
 
-import lombok.Data;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.apache.curator.test.TestingServer;
 import org.apache.zookeeper.CreateMode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 /**
  * Created by haoyifen on 2017/6/19 9:55.
  */
 @ConfigurationProperties("service.registry")
-@Data
 public class ServiceRegistry {
     private String zkAddress;
     private String serviceName;
     private CuratorFramework client;
+
+    public String getZkAddress() {
+        return zkAddress;
+    }
+
+    public void setZkAddress(String zkAddress) {
+        this.zkAddress = zkAddress;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
 
     public synchronized void connect() throws Exception {
         CuratorFramework client = CuratorFrameworkFactory.newClient(zkAddress, 15 * 1000, 5000,
@@ -31,16 +43,21 @@ public class ServiceRegistry {
 
     public void register(int port) {
         try {
-            String hostName = InetAddress.getLocalHost().getHostName();
-            String serviceAddress = hostName + ":" + port;
-            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(
-                    ServiceCommon.getServicePath(serviceName) + "/server", serviceAddress.getBytes(StandardCharsets.UTF_8));
+            System.out.println(zkAddress);
+            //ip
+            String hostName = InetAddress.getLocalHost().getHostAddress();
+            String serviceAddress = "192.168.1.10" + ":" + port;
+            String path = ServiceCommon.getServicePath(serviceName) + "/server";
+            client.create().creatingParentsIfNeeded()
+                    .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
+                    .forPath(path, serviceAddress.getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void main(String[] args) throws Exception {
+/*    public static void main(String[] args) throws Exception {
+        Logger logger = LoggerFactory.getLogger("main");
         TestingServer testingServer = new TestingServer(2181);
         testingServer.start();
         ServiceRegistry registry = new ServiceRegistry();
@@ -62,6 +79,6 @@ public class ServiceRegistry {
         System.out.println(strings);
         registry.client.close();
         testingServer.stop();
-    }
+    }*/
 
 }

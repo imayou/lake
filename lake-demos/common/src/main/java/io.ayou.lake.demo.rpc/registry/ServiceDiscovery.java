@@ -2,13 +2,11 @@ package io.ayou.lake.demo.rpc.registry;
 
 import com.google.common.collect.ImmutableList;
 import javafx.util.Pair;
-import lombok.Data;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.PathChildrenCache;
 import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.apache.curator.test.TestingServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -24,12 +22,19 @@ import java.util.stream.Collectors;
  * Created by haoyifen on 2017/6/19 12:56.
  */
 @ConfigurationProperties("service.discovery")
-@Data
 public class ServiceDiscovery {
     private static Logger logger = LoggerFactory.getLogger(ServiceDiscovery.class);
     private String zkAddress;
     private CuratorFramework client;
     private ConcurrentHashMap<String, PathChildrenCache> servicesMap = new ConcurrentHashMap<>();
+
+    public void setZkAddress(String zkAddress) {
+        this.zkAddress = zkAddress;
+    }
+
+    public String getZkAddress() {
+        return zkAddress;
+    }
 
     @PostConstruct
     public void connect() throws Exception {
@@ -79,7 +84,7 @@ public class ServiceDiscovery {
     }
 
 
-    public static void main(String[] args) throws Exception {
+   /* public static void main(String[] args) throws Exception {
 
         TestingServer testingServer = new TestingServer(2181);
 
@@ -104,5 +109,5 @@ public class ServiceDiscovery {
         Thread.sleep(2000);
         ImmutableList<Pair<String, Integer>> test1 = serviceDiscovery.getService("test");
         System.out.println(test1);
-    }
+    }*/
 }

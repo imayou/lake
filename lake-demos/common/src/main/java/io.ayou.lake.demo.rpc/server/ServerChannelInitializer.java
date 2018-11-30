@@ -20,11 +20,9 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
 	protected void initChannel(SocketChannel ch) throws Exception {
 		ch.pipeline()
 				.addLast(new LengthFieldBasedFrameDecoder(65535, 0, 4, 0, 4))
-				.addLast(new RPCDecoder<RpcCall>() {
-				})
 				.addLast(new LengthFieldPrepender(4, false))
-				.addLast(new RPCEncoder<RPCResponse>() {
-				})
+				.addLast(new RPCDecoder<RpcCall>() {})
+				.addLast(new RPCEncoder<RPCResponse>() {})
 				.addLast(rpcServerHandler);
 	}
 }
