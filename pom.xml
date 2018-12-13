@@ -17,6 +17,7 @@
         <module>lake-common</module>
         <module>lake-demos</module>
         <module>lake-test</module>
+        <module>lake-container</module>
     </modules>
 
 
