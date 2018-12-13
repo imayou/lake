@@ -1,22 +1,14 @@
 package io.ayou.lake.d.consumer;
 
-import co.paralleluniverse.fibers.Fiber;
 import io.ayou.lake.d.api.UserService;
 import io.ayou.lake.d.domain.User;
 import io.ayou.lake.demo.rpc.autoconfiguration.EnableServiceDiscovery;
 import io.ayou.lake.demo.rpc.client.ServiceProxyUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.List;
 
 /**
  * @author AYOU
@@ -24,21 +16,22 @@ import java.util.List;
 @EnableServiceDiscovery
 @SpringBootApplication
 public class CApplication {
-    private static Logger logger = LoggerFactory.getLogger(CApplication.class);
-
-    public static void main(String[] args) {
-        SpringApplication.run(CApplication.class, args);
-    }
+    //private static Logger logger = LoggerFactory.getLogger(CApplication.class);
 
     @Autowired
     ServiceProxyUtil serviceProxyUtil;
 
     @PostConstruct
-    public void test(){
+    public void test() {
         UserService userService = serviceProxyUtil.serviceProxy("test", UserService.class);
         User u = userService.get("1");
         System.out.println(u);
     }
+
+    public static void main(String[] args) {
+        SpringApplication.run(CApplication.class, args);
+    }
+
 
     /*@Bean
     public CommandLineRunner runner(ServiceProxyUtil serviceProxyUtil) {
