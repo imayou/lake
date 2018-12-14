@@ -1,20 +1,24 @@
 package io.ayou.lake.registry.zookeeper;
 
 import org.apache.curator.utils.CloseableUtils;
-import org.apache.curator.x.discovery.ServiceDiscovery;
 import org.apache.curator.x.discovery.ServiceInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+/**
+ * @author AYOU
+ */
 @Component
 public class Discovery {
 
     @Autowired
     private Client client;
 
-    private void listInstances() throws Exception {
+    public void listInstances() throws Exception {
 
         try {
             Collection<String> serviceNames = client.getServiceDiscovery().queryForNames();
@@ -31,17 +35,21 @@ public class Discovery {
         }
     }
 
-    private void get(String serviceName) {
+    public List<ServiceInstance<InstanceDetails>> get(String serviceName) {
         try {
-            Collection<ServiceInstance<InstanceDetails>> serviceNames = client.getServiceDiscovery().queryForInstances(serviceName);
-            serviceNames.stream().forEach(instance -> {
-                //outputInstance(instance);
-            });
+            Collection<ServiceInstance<InstanceDetails>> serviceInstance = client.getServiceDiscovery().queryForInstances(serviceName);
+            List<ServiceInstance<InstanceDetails>> lists = new ArrayList<>();
+            serviceInstance.stream().forEach(instance -> lists.add(instance));
+            return lists;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             CloseableUtils.closeQuietly(client.getServiceDiscovery());
         }
+        return null;
+    }
 
+    public Client getClient() {
+        return client;
     }
 }

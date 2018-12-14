@@ -13,7 +13,16 @@
     <packaging>pom</packaging>
     <modules>
         <module>lake-serialization-protobuffer</module>
+        <module>lake-serialization-api</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.ayou.lake</groupId>
+            <artifactId>lake-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 
 </project>

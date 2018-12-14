@@ -10,6 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>lake-protocol</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>lake-protocol-lake</module>
+    </modules>
 
 
 </project>

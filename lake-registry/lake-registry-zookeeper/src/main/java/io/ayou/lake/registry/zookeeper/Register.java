@@ -29,4 +29,8 @@ public class Register {
     public void close() throws IOException {
         client.getServiceDiscovery().close();
     }
+
+    public Client getClient() {
+        return client;
+    }
 }

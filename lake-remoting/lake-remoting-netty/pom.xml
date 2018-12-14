@@ -12,4 +12,28 @@
     <artifactId>lake-remoting-netty</artifactId>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>io.ayou.lake</groupId>
+            <artifactId>lake-container-spring</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ayou.lake</groupId>
+            <artifactId>lake-protocol-lake</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ayou.lake</groupId>
+            <artifactId>lake-serialization-protobuffer</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ayou.lake</groupId>
+            <artifactId>lake-registry-zookeeper</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+
 </project>

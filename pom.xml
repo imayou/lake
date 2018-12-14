@@ -15,8 +15,8 @@
         <module>lake-serialization</module>
         <module>lake-protocol</module>
         <module>lake-common</module>
-        <module>lake-demos</module>
         <module>lake-container</module>
+        <module>lake-example</module>
     </modules>
 
 
